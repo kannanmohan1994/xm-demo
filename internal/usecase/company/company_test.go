@@ -46,7 +46,6 @@ func TestService_CreateCompany(t *testing.T) {
 				IsRegistered:  &isRegistered,
 				Type:          consts.CompanyTypeCorporations,
 			},
-			err:           nil,
 			repoCallCount: 1,
 		},
 	}
@@ -59,6 +58,170 @@ func TestService_CreateCompany(t *testing.T) {
 			s := InitCompanyUsecase(repo, logger)
 
 			_, err := s.CreateCompany(tt.request)
+			if tt.err != nil {
+				require.Error(t, err)
+			} else {
+				require.NoError(t, err)
+			}
+		})
+	}
+}
+
+func TestService_GetCompany(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	testCases := []struct {
+		name          string
+		companyId     string
+		err           map[string]error
+		repoCallCount int
+	}{
+		{
+			name:          "should_return_error_for_repo_call",
+			companyId:     "company-id-1",
+			err:           map[string]error{"GetCompany": errors.New("repo call fail")},
+			repoCallCount: 1,
+		},
+		{
+			name:          "success",
+			companyId:     "company-id-1",
+			repoCallCount: 1,
+		},
+	}
+
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			repo := NewMockCompanyRepository(ctrl)
+			logger := logger.NewNoop()
+			repo.EXPECT().GetCompany(gomock.Any()).Return(&models.Company{}, tt.err["GetCompany"]).Times(tt.repoCallCount)
+			s := InitCompanyUsecase(repo, logger)
+
+			_, err := s.GetCompany(tt.companyId)
+			if tt.err != nil {
+				require.Error(t, err)
+			} else {
+				require.NoError(t, err)
+			}
+		})
+	}
+}
+
+func TestService_PatchCompany(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	testCases := []struct {
+		name               string
+		companyId          string
+		request            *request.PatchCompanyRequest
+		err                map[string]error
+		getRepoCallCount   int
+		patchRepoCallCount int
+	}{
+		{
+			name:      "should_return_error_for_get_company_repo_call",
+			companyId: "company-id-1",
+			request: &request.PatchCompanyRequest{
+				Name:          "xm",
+				Description:   "forex trading",
+				EmployeeCount: &employeeCount,
+				IsRegistered:  &isRegistered,
+				Type:          consts.CompanyTypeCooperative,
+			},
+			err:                map[string]error{"GetCompany": errors.New("repo call fail")},
+			getRepoCallCount:   1,
+			patchRepoCallCount: 0,
+		},
+		{
+			name:      "should_return_error_for_patch_company_repo_call",
+			companyId: "company-id-1",
+			request: &request.PatchCompanyRequest{
+				Name:          "xm",
+				Description:   "forex trading",
+				EmployeeCount: &employeeCount,
+				IsRegistered:  &isRegistered,
+				Type:          consts.CompanyTypeCooperative,
+			},
+			err:                map[string]error{"PatchCompany": errors.New("repo call fail")},
+			getRepoCallCount:   1,
+			patchRepoCallCount: 1,
+		},
+		{
+			name:      "success",
+			companyId: "company-id-1",
+			request: &request.PatchCompanyRequest{
+				Name:          "xm",
+				Description:   "forex trading",
+				EmployeeCount: &employeeCount,
+				IsRegistered:  &isRegistered,
+				Type:          consts.CompanyTypeCooperative,
+			},
+			getRepoCallCount:   1,
+			patchRepoCallCount: 1,
+		},
+	}
+
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			repo := NewMockCompanyRepository(ctrl)
+			logger := logger.NewNoop()
+			repo.EXPECT().GetCompany(gomock.Any()).Return(&models.Company{}, tt.err["GetCompany"]).Times(tt.getRepoCallCount)
+			repo.EXPECT().PatchCompany(gomock.Any(), gomock.Any()).Return(&models.Company{}, tt.err["PatchCompany"]).Times(tt.patchRepoCallCount)
+			s := InitCompanyUsecase(repo, logger)
+
+			_, err := s.PatchCompany(tt.companyId, tt.request)
+			if tt.err != nil {
+				require.Error(t, err)
+			} else {
+				require.NoError(t, err)
+			}
+		})
+	}
+}
+
+func TestService_DeleteCompany(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	testCases := []struct {
+		name                string
+		companyId           string
+		err                 map[string]error
+		getRepoCallCount    int
+		deleteRepoCallCount int
+	}{
+		{
+			name:                "should_return_error_for_get_company_repo_call",
+			companyId:           "company-id-1",
+			err:                 map[string]error{"GetCompany": errors.New("repo call fail")},
+			getRepoCallCount:    1,
+			deleteRepoCallCount: 0,
+		},
+		{
+			name:                "should_return_error_for_delete_company_repo_call",
+			companyId:           "company-id-1",
+			err:                 map[string]error{"DeleteCompany": errors.New("repo call fail")},
+			getRepoCallCount:    1,
+			deleteRepoCallCount: 1,
+		},
+		{
+			name:                "success",
+			companyId:           "company-id-1",
+			getRepoCallCount:    1,
+			deleteRepoCallCount: 1,
+		},
+	}
+
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			repo := NewMockCompanyRepository(ctrl)
+			logger := logger.NewNoop()
+			repo.EXPECT().GetCompany(gomock.Any()).Return(&models.Company{}, tt.err["GetCompany"]).Times(tt.getRepoCallCount)
+			repo.EXPECT().DeleteCompany(gomock.Any()).Return(tt.err["DeleteCompany"]).Times(tt.deleteRepoCallCount)
+			s := InitCompanyUsecase(repo, logger)
+
+			err := s.DeleteCompany(tt.companyId)
 			if tt.err != nil {
 				require.Error(t, err)
 			} else {

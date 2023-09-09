@@ -41,7 +41,7 @@ func (u *usecase) GetCompany(id string) (result *models.Company, err error) {
 func (u *usecase) PatchCompany(id string, req *request.PatchCompanyRequest) (result *models.Company, err error) {
 	u.logger.Infof("Begin Usecase - PatchCompany")
 
-	result, err = u.company.GetCompany(id)
+	_, err = u.company.GetCompany(id)
 	if err != nil {
 		return result, err
 	}
