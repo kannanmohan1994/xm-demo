@@ -1,7 +1,9 @@
 package company
 
 import (
+	"fmt"
 	"time"
+	"xm/consts"
 	"xm/internal/entity/models"
 	"xm/internal/entity/request"
 
@@ -35,6 +37,9 @@ func (u *usecase) GetCompany(id string) (result *models.Company, err error) {
 		return result, err
 	}
 	u.logger.Infof("End Usecase - GetCompany")
+
+	u.notifier.Notify(consts.KafkaEventNotifierTopic, []byte(fmt.Sprintf("fetched company with name: %s", result.Name)))
+
 	return result, nil
 }
 

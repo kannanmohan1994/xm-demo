@@ -39,6 +39,24 @@ services:
       - docker.env
     networks:
       - xmnet
+  go-kafka-simple-zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: go-kafka-simple-zookeeper
+    ports:
+      - 2181:2181
+    networks:
+      - xmnet
+  go-kafka-simple-kafka:
+    image: wurstmeister/kafka
+    container_name: go-kafka-simple-kafka
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_HOST_NAME: go-kafka-simple-kafka
+      KAFKA_ZOOKEEPER_CONNECT: go-kafka-simple-zookeeper:2181
+    networks:
+      - xmnet
 
 networks:
   xmnet:

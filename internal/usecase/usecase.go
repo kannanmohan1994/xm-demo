@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"xm/internal/middleware"
+	notifier "xm/internal/notifiers"
 	"xm/internal/repo"
 	company "xm/internal/usecase/company"
 	"xm/internal/usecase/user"
@@ -13,9 +14,9 @@ type Usecase struct {
 	User    user.UsecaseInterface
 }
 
-func Init(repo *repo.Repo, middleware middleware.Middleware, logger logger.Log) *Usecase {
+func Init(repo *repo.Repo, middleware middleware.Middleware, logger logger.Log, notifier notifier.Notifier) *Usecase {
 	return &Usecase{
-		Company: company.InitCompanyUsecase(repo.Company, logger),
-		User:    user.InitUserUsecase(repo.User, middleware, logger),
+		Company: company.InitCompanyUsecase(repo.Company, logger, notifier),
+		User:    user.InitUserUsecase(repo.User, middleware, logger, notifier),
 	}
 }

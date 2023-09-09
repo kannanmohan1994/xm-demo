@@ -6,6 +6,7 @@ import (
 	"xm/consts"
 	"xm/internal/entity/models"
 	"xm/internal/entity/request"
+	notifier "xm/internal/notifiers"
 	"xm/logger"
 
 	gomock "github.com/golang/mock/gomock"
@@ -54,8 +55,9 @@ func TestService_CreateCompany(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			repo := NewMockCompanyRepository(ctrl)
 			logger := logger.NewNoop()
+			notifier := notifier.NewNoop()
 			repo.EXPECT().CreateCompany(gomock.Any()).Return(&models.Company{}, tt.err["CreateCompany"]).Times(tt.repoCallCount)
-			s := InitCompanyUsecase(repo, logger)
+			s := InitCompanyUsecase(repo, logger, notifier)
 
 			_, err := s.CreateCompany(tt.request)
 			if tt.err != nil {
@@ -94,8 +96,9 @@ func TestService_GetCompany(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			repo := NewMockCompanyRepository(ctrl)
 			logger := logger.NewNoop()
+			notifier := notifier.NewNoop()
 			repo.EXPECT().GetCompany(gomock.Any()).Return(&models.Company{}, tt.err["GetCompany"]).Times(tt.repoCallCount)
-			s := InitCompanyUsecase(repo, logger)
+			s := InitCompanyUsecase(repo, logger, notifier)
 
 			_, err := s.GetCompany(tt.companyId)
 			if tt.err != nil {
@@ -166,9 +169,10 @@ func TestService_PatchCompany(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			repo := NewMockCompanyRepository(ctrl)
 			logger := logger.NewNoop()
+			notifier := notifier.NewNoop()
 			repo.EXPECT().GetCompany(gomock.Any()).Return(&models.Company{}, tt.err["GetCompany"]).Times(tt.getRepoCallCount)
 			repo.EXPECT().PatchCompany(gomock.Any(), gomock.Any()).Return(&models.Company{}, tt.err["PatchCompany"]).Times(tt.patchRepoCallCount)
-			s := InitCompanyUsecase(repo, logger)
+			s := InitCompanyUsecase(repo, logger, notifier)
 
 			_, err := s.PatchCompany(tt.companyId, tt.request)
 			if tt.err != nil {
@@ -217,9 +221,10 @@ func TestService_DeleteCompany(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			repo := NewMockCompanyRepository(ctrl)
 			logger := logger.NewNoop()
+			notifier := notifier.NewNoop()
 			repo.EXPECT().GetCompany(gomock.Any()).Return(&models.Company{}, tt.err["GetCompany"]).Times(tt.getRepoCallCount)
 			repo.EXPECT().DeleteCompany(gomock.Any()).Return(tt.err["DeleteCompany"]).Times(tt.deleteRepoCallCount)
-			s := InitCompanyUsecase(repo, logger)
+			s := InitCompanyUsecase(repo, logger, notifier)
 
 			err := s.DeleteCompany(tt.companyId)
 			if tt.err != nil {

@@ -20,6 +20,8 @@ type Config struct {
 	JWKFilePath                      string `mapstructure:"JWK_FILE_PATH"`
 	JWKKid                           string `mapstructure:"JWK_KID"`
 	AccessTokenExpiryDurationSeconds uint   `mapstructure:"ACCESS_TOKEN_EXPIRY_DURATION_SECONDS"`
+	KafkaHost                        string `mapstructure:"KAFKA_HOST"`
+	KafkaPort                        string `mapstructure:"KAFKA_PORT"`
 }
 
 var (

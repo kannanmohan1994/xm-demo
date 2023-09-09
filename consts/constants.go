@@ -10,5 +10,10 @@ const (
 )
 
 const (
-	CorrelationID string = "CorrelationID"
+	CorrelationID string = "correlation-id"
+)
+
+const (
+	KafkaEventNotifierTopic = "kafka-event-notifier"
+	KafkaGroupId            = "kafka-group-id"
 )

@@ -3,6 +3,7 @@ package company
 import (
 	"xm/internal/entity/models"
 	"xm/internal/entity/request"
+	notifiers "xm/internal/notifiers"
 	company "xm/internal/repo/company"
 	"xm/logger"
 )
@@ -15,13 +16,15 @@ type UsecaseInterface interface {
 }
 
 type usecase struct {
-	logger  logger.Log
-	company company.CompanyRepository
+	logger   logger.Log
+	notifier notifiers.Notifier
+	company  company.CompanyRepository
 }
 
-func InitCompanyUsecase(company company.CompanyRepository, logger logger.Log) UsecaseInterface {
+func InitCompanyUsecase(company company.CompanyRepository, logger logger.Log, notifier notifiers.Notifier) UsecaseInterface {
 	return &usecase{
-		logger:  logger,
-		company: company,
+		logger:   logger,
+		notifier: notifier,
+		company:  company,
 	}
 }
