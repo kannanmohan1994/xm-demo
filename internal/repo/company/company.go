@@ -7,10 +7,10 @@ import (
 )
 
 type RepoInterface interface {
-	GetCompanyData(id string) (result *models.Company, err error)
-	CreateCompanyData(obj *models.Company) (result *models.Company, err error)
-	PatchCompanyData(id string, obj *models.Company) (result *models.Company, err error)
-	DeleteCompanyData(id string) (err error)
+	GetCompany(id string) (result *models.Company, err error)
+	CreateCompany(obj *models.Company) (result *models.Company, err error)
+	PatchCompany(id string, obj *models.Company) (result *models.Company, err error)
+	DeleteCompany(id string) (err error)
 }
 
 type repo struct {

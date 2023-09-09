@@ -9,8 +9,8 @@ import (
 	"github.com/google/uuid"
 )
 
-func (u *usecase) CreateCompanyData(req *request.CreateCompanyRequest) (result *models.Company, err error) {
-	logger.Info("Begin Usecase - CreateCompanyData")
+func (u *usecase) CreateCompany(req *request.CreateCompanyRequest) (result *models.Company, err error) {
+	logger.Info("Begin Usecase - CreateCompany")
 	company := &models.Company{
 		ID:            uuid.New().String(),
 		Name:          req.Name,
@@ -21,28 +21,28 @@ func (u *usecase) CreateCompanyData(req *request.CreateCompanyRequest) (result *
 		CreatedAt:     time.Now().UTC(),
 		UpdatedAt:     time.Now().UTC(),
 	}
-	result, err = u.company.CreateCompanyData(company)
+	result, err = u.company.CreateCompany(company)
 	if err != nil {
 		return nil, err
 	}
-	logger.Info("End Usecase - CreateCompanyData")
+	logger.Info("End Usecase - CreateCompany")
 	return result, err
 }
 
-func (u *usecase) GetCompanyData(id string) (result *models.Company, err error) {
-	logger.Info("Begin Usecase - GetCompanyData")
-	result, err = u.company.GetCompanyData(id)
+func (u *usecase) GetCompany(id string) (result *models.Company, err error) {
+	logger.Info("Begin Usecase - GetCompany")
+	result, err = u.company.GetCompany(id)
 	if err != nil {
 		return result, err
 	}
-	logger.Info("End Usecase - GetCompanyData")
+	logger.Info("End Usecase - GetCompany")
 	return result, nil
 }
 
-func (u *usecase) PatchCompanyData(id string, req *request.PatchCompanyRequest) (result *models.Company, err error) {
-	logger.Info("Begin Usecase - PatchCompanyData")
+func (u *usecase) PatchCompany(id string, req *request.PatchCompanyRequest) (result *models.Company, err error) {
+	logger.Info("Begin Usecase - PatchCompany")
 
-	result, err = u.company.GetCompanyData(id)
+	result, err = u.company.GetCompany(id)
 	if err != nil {
 		return result, err
 	}
@@ -54,27 +54,27 @@ func (u *usecase) PatchCompanyData(id string, req *request.PatchCompanyRequest) 
 		IsRegistered:  req.IsRegistered,
 		Type:          req.Type,
 	}
-	result, err = u.company.PatchCompanyData(id, company)
+	result, err = u.company.PatchCompany(id, company)
 	if err != nil {
 		return result, err
 	}
-	logger.Info("End Usecase - PatchCompanyData")
+	logger.Info("End Usecase - PatchCompany")
 	return result, nil
 }
 
-func (u *usecase) DeleteCompanyData(id string) (err error) {
-	logger.Info("Begin Usecase - PatchCompanyData")
+func (u *usecase) DeleteCompany(id string) (err error) {
+	logger.Info("Begin Usecase - PatchCompany")
 
-	_, err = u.company.GetCompanyData(id)
+	_, err = u.company.GetCompany(id)
 	if err != nil {
 		return err
 	}
 
-	err = u.company.DeleteCompanyData(id)
+	err = u.company.DeleteCompany(id)
 	if err != nil {
 		return err
 	}
 
-	logger.Info("End Usecase - PatchCompanyData")
+	logger.Info("End Usecase - PatchCompany")
 	return nil
 }

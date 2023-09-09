@@ -41,7 +41,7 @@ func (h *userHandler) HandleCreateUser(c *gin.Context) {
 		return
 	}
 
-	logger.Info("End Handler - CreateCompanyData")
+	logger.Info("End Handler - CreateCompany")
 	c.JSON(http.StatusOK, utils.Send(res))
 }
 
@@ -66,6 +66,6 @@ func (h *userHandler) HandleLoginUser(c *gin.Context) {
 		return
 	}
 
-	logger.Info("End Handler - CreateCompanyData")
+	logger.Info("End Handler - CreateCompany")
 	c.JSON(http.StatusOK, utils.Send(res))
 }

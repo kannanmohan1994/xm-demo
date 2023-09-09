@@ -7,10 +7,10 @@ import (
 )
 
 type UsecaseInterface interface {
-	GetCompanyData(id string) (result *models.Company, err error)
-	CreateCompanyData(req *request.CreateCompanyRequest) (result *models.Company, err error)
-	PatchCompanyData(id string, req *request.PatchCompanyRequest) (result *models.Company, err error)
-	DeleteCompanyData(id string) (err error)
+	GetCompany(id string) (result *models.Company, err error)
+	CreateCompany(req *request.CreateCompanyRequest) (result *models.Company, err error)
+	PatchCompany(id string, req *request.PatchCompanyRequest) (result *models.Company, err error)
+	DeleteCompany(id string) (err error)
 }
 
 type usecase struct {

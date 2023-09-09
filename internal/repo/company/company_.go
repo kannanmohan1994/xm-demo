@@ -8,32 +8,32 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-func (d *repo) CreateCompanyData(company *models.Company) (result *models.Company, err error) {
-	logger.Info("Begin Repo - CreateCompanyData")
+func (d *repo) CreateCompany(company *models.Company) (result *models.Company, err error) {
+	logger.Info("Begin Repo - CreateCompany")
 
 	err = d.db.Table("company").Create(&company).Error
 	if err != nil {
 		logger.Error("error creating company", err.Error())
 	}
 
-	logger.Info("End Repo - CreateCompanyData", company.ID)
+	logger.Info("End Repo - CreateCompany", company.ID)
 	return company, err
 }
 
-func (d *repo) GetCompanyData(id string) (result *models.Company, err error) {
-	logger.Info("Begin Repo - GetCompanyData")
+func (d *repo) GetCompany(id string) (result *models.Company, err error) {
+	logger.Info("Begin Repo - GetCompany")
 
 	err = d.db.Table("company").Where("id = ?", id).First(&result).Error
 	if err != nil {
 		logger.Error("error fetching from company", err.Error())
 	}
 
-	logger.Info("End Repo - GetCompanyData", result)
+	logger.Info("End Repo - GetCompany", result)
 	return result, err
 }
 
-func (d *repo) PatchCompanyData(id string, obj *models.Company) (result *models.Company, err error) {
-	logger.Info("Begin Repo - PatchCompanyData")
+func (d *repo) PatchCompany(id string, obj *models.Company) (result *models.Company, err error) {
+	logger.Info("Begin Repo - PatchCompany")
 
 	updateMap := make(map[string]interface{}, 5)
 	if len(obj.Name) > 0 {
@@ -61,18 +61,18 @@ func (d *repo) PatchCompanyData(id string, obj *models.Company) (result *models.
 		}
 	}
 
-	logger.Info("End Repo - PatchCompanyData", result)
+	logger.Info("End Repo - PatchCompany", result)
 	return result, err
 }
 
-func (d *repo) DeleteCompanyData(id string) (err error) {
-	logger.Info("Begin Repo - DeleteCompanyData")
+func (d *repo) DeleteCompany(id string) (err error) {
+	logger.Info("Begin Repo - DeleteCompany")
 
 	err = d.db.Table("company").Delete(&models.Company{}, "id = ?", id).Error
 	if err != nil {
 		logger.Error("error fetching from company", err.Error())
 	}
 
-	logger.Info("End Repo - DeleteCompanyData")
+	logger.Info("End Repo - DeleteCompany")
 	return err
 }

@@ -1,18 +1,18 @@
 version: '3.9'
 
 services:
-  xm:
-    container_name: xm
-    build:
-      context: .
-    ports:
-      - '9001:9001'
-    env_file:
-      - docker.env
-    networks:
-      - xmnet
-    depends_on:
-      - postgres
+  # xm:
+  #   container_name: xm
+  #   build:
+  #     context: .
+  #   ports:
+  #     - '9001:9001'
+  #   env_file:
+  #     - docker.env
+  #   networks:
+  #     - xmnet
+  #   depends_on:
+  #     - postgres
 
   postgres:
     container_name: postgres

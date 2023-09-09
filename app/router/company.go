@@ -14,13 +14,13 @@ func (c *Capsule) CompanyRoutes(r *gin.RouterGroup) {
 	companyV1 := r.Group("/company", mdl.Authorize())
 
 	companyV1.GET("/:company_id",
-		companyHandler.HandleGetCompanyData)
+		companyHandler.HandleGetCompany)
 	companyV1.POST("",
 		middleware.Validate[request.CreateCompanyRequest]("CreateCompanyRequest"),
-		companyHandler.HandleCreateCompanyData)
+		companyHandler.HandleCreateCompany)
 	companyV1.PATCH("/:company_id",
 		middleware.Validate[request.PatchCompanyRequest]("PatchCompanyRequest"),
-		companyHandler.HandlePatchCompanyData)
+		companyHandler.HandlePatchCompany)
 	companyV1.DELETE("/:company_id",
-		companyHandler.HandleDeleteCompanyData)
+		companyHandler.HandleDeleteCompany)
 }

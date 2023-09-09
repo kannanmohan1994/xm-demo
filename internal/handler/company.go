@@ -20,8 +20,8 @@ func InitCompanyHandler(uc company.UsecaseInterface) *companyHandler {
 	}
 }
 
-func (h *companyHandler) HandleCreateCompanyData(c *gin.Context) {
-	logger.Info("Begin Handler - CreateCompanyData")
+func (h *companyHandler) HandleCreateCompany(c *gin.Context) {
+	logger.Info("Begin Handler - CreateCompany")
 
 	if errMessage, ok := c.Get("error"); ok {
 		c.JSON(http.StatusBadRequest, utils.Fail(100, errMessage.(string)))
@@ -35,33 +35,33 @@ func (h *companyHandler) HandleCreateCompanyData(c *gin.Context) {
 	}
 	req := data.(request.CreateCompanyRequest)
 
-	res, err := h.companyUC.CreateCompanyData(&req)
+	res, err := h.companyUC.CreateCompany(&req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, utils.Fail(100, err.Error()))
 		return
 	}
 
-	logger.Info("End Handler - CreateCompanyData")
+	logger.Info("End Handler - CreateCompany")
 	c.JSON(http.StatusOK, utils.Send(res))
 }
 
-func (h *companyHandler) HandleGetCompanyData(c *gin.Context) {
-	logger.Info("Begin Handler - GetCompanyData")
+func (h *companyHandler) HandleGetCompany(c *gin.Context) {
+	logger.Info("Begin Handler - GetCompany")
 
 	companyId := c.Param("company_id")
 
-	result, err := h.companyUC.GetCompanyData(companyId)
+	result, err := h.companyUC.GetCompany(companyId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, utils.Fail(100, err.Error()))
 		return
 	}
 
-	logger.Info("End Handler - GetCompanyData")
+	logger.Info("End Handler - GetCompany")
 	c.JSON(http.StatusOK, utils.Send(result))
 }
 
-func (h *companyHandler) HandlePatchCompanyData(c *gin.Context) {
-	logger.Info("Begin Handler - PatchCompanyData")
+func (h *companyHandler) HandlePatchCompany(c *gin.Context) {
+	logger.Info("Begin Handler - PatchCompany")
 
 	if errMessage, ok := c.Get("error"); ok {
 		c.JSON(http.StatusBadRequest, utils.Fail(100, errMessage.(string)))
@@ -76,27 +76,27 @@ func (h *companyHandler) HandlePatchCompanyData(c *gin.Context) {
 	req := data.(request.PatchCompanyRequest)
 	companyId := c.Param("company_id")
 
-	result, err := h.companyUC.PatchCompanyData(companyId, &req)
+	result, err := h.companyUC.PatchCompany(companyId, &req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, utils.Fail(100, err.Error()))
 		return
 	}
 
-	logger.Info("End Handler - PatchCompanyData")
+	logger.Info("End Handler - PatchCompany")
 	c.JSON(http.StatusOK, utils.Send(result))
 }
 
-func (h *companyHandler) HandleDeleteCompanyData(c *gin.Context) {
-	logger.Info("Begin Handler - DeleteCompanyData")
+func (h *companyHandler) HandleDeleteCompany(c *gin.Context) {
+	logger.Info("Begin Handler - DeleteCompany")
 
 	companyId := c.Param("company_id")
 
-	err := h.companyUC.DeleteCompanyData(companyId)
+	err := h.companyUC.DeleteCompany(companyId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, utils.Fail(100, err.Error()))
 		return
 	}
 
-	logger.Info("End Handler - DeleteCompanyData")
+	logger.Info("End Handler - DeleteCompany")
 	c.JSON(http.StatusOK, utils.Send(nil))
 }
