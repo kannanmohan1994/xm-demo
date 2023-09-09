@@ -11,17 +11,19 @@ import (
 )
 
 type userHandler struct {
+	logger logger.Log
 	userUC user.UsecaseInterface
 }
 
-func InitUserHandler(uc user.UsecaseInterface) *userHandler {
+func InitUserHandler(uc user.UsecaseInterface, logger logger.Log) *userHandler {
 	return &userHandler{
+		logger: logger,
 		userUC: uc,
 	}
 }
 
 func (h *userHandler) HandleCreateUser(c *gin.Context) {
-	logger.Info("Begin Handler - CreateUser")
+	h.logger.Infof("Begin Handler - CreateUser")
 
 	if errMessage, ok := c.Get("error"); ok {
 		c.JSON(http.StatusBadRequest, utils.Fail(100, errMessage.(string)))
@@ -41,12 +43,12 @@ func (h *userHandler) HandleCreateUser(c *gin.Context) {
 		return
 	}
 
-	logger.Info("End Handler - CreateCompany")
+	h.logger.Infof("End Handler - CreateCompany")
 	c.JSON(http.StatusOK, utils.Send(res))
 }
 
 func (h *userHandler) HandleLoginUser(c *gin.Context) {
-	logger.Info("Begin Handler - CreateUser")
+	h.logger.Infof("Begin Handler - CreateUser")
 
 	if errMessage, ok := c.Get("error"); ok {
 		c.JSON(http.StatusBadRequest, utils.Fail(100, errMessage.(string)))
@@ -66,6 +68,6 @@ func (h *userHandler) HandleLoginUser(c *gin.Context) {
 		return
 	}
 
-	logger.Info("End Handler - CreateCompany")
+	h.logger.Infof("End Handler - CreateCompany")
 	c.JSON(http.StatusOK, utils.Send(res))
 }

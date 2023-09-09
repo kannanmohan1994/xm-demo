@@ -12,6 +12,7 @@ import (
 )
 
 func Start() {
+	config.Setup()
 	config := config.GetConfig()
 
 	db, err := database.PrepareDatabase()
@@ -19,12 +20,12 @@ func Start() {
 		panic(err)
 	}
 
-	logger.InitLogger(config)
+	logger := logger.NewLogger(config)
 
-	middleware := middleware.InitMiddleware(*config)
-	dom := repo.InitRepo(db)
-	uc := usecase.Init(dom, middleware)
-	hndlr := handler.Init(uc)
+	middleware := middleware.InitMiddleware(*config, logger)
+	dom := repo.InitRepo(db, logger)
+	uc := usecase.Init(dom, middleware, logger)
+	hndlr := handler.Init(uc, logger)
 
 	router := router.PrepareRouter(&router.Capsule{
 		DB:         db,
@@ -38,6 +39,6 @@ func Start() {
 	logger.Infof("server running at port %s", config.ServerPort)
 	err = router.Run(":" + config.ServerPort)
 	if err != nil {
-		logger.Fatalf("error running server - %s", err.Error())
+		logger.Infof("error running server - %s", err.Error())
 	}
 }

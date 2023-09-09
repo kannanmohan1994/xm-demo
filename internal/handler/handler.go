@@ -2,6 +2,7 @@ package handler
 
 import (
 	"xm/internal/usecase"
+	"xm/logger"
 )
 
 type Handler struct {
@@ -10,10 +11,10 @@ type Handler struct {
 	HealthHandler  *healthHandler
 }
 
-func Init(uc *usecase.Usecase) *Handler {
+func Init(uc *usecase.Usecase, logger logger.Log) *Handler {
 	return &Handler{
-		CompanyHandler: InitCompanyHandler(uc.Company),
-		UserHandler:    InitUserHandler(uc.User),
+		CompanyHandler: InitCompanyHandler(uc.Company, logger),
+		UserHandler:    InitUserHandler(uc.User, logger),
 		HealthHandler:  InitHealthHandler(),
 	}
 }

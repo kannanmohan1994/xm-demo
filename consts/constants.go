@@ -3,10 +3,10 @@ package consts
 type CompanyType string
 
 const (
-	Corporations       CompanyType = "Corporations"
-	NonProfit          CompanyType = "NonProfit"
-	Cooperative        CompanyType = "Cooperative"
-	SoleProprietorship CompanyType = "Sole Proprietorship"
+	CompanyTypeCorporations       CompanyType = "Corporations"
+	CompanyTypeNonProfit          CompanyType = "NonProfit"
+	CompanyTypeCooperative        CompanyType = "Cooperative"
+	CompanyTypeSoleProprietorship CompanyType = "Sole Proprietorship"
 )
 
 const (

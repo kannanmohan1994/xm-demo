@@ -2,21 +2,24 @@ package user
 
 import (
 	"xm/internal/entity/models"
+	"xm/logger"
 
 	"gorm.io/gorm"
 )
 
-type RepoInterface interface {
+type UserRepository interface {
 	CreateUser(user *models.User) (result *models.User, err error)
 	GetUser(name, password string) (result *models.User, err error)
 }
 
 type repo struct {
-	db *gorm.DB
+	logger logger.Log
+	db     *gorm.DB
 }
 
-func InitUserRepo(db *gorm.DB) RepoInterface {
+func InitUserRepo(db *gorm.DB, logger logger.Log) UserRepository {
 	return &repo{
-		db: db,
+		logger: logger,
+		db:     db,
 	}
 }

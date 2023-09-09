@@ -4,6 +4,7 @@ import (
 	"xm/internal/entity/models"
 	"xm/internal/entity/request"
 	company "xm/internal/repo/company"
+	"xm/logger"
 )
 
 type UsecaseInterface interface {
@@ -14,11 +15,13 @@ type UsecaseInterface interface {
 }
 
 type usecase struct {
-	company company.RepoInterface
+	logger  logger.Log
+	company company.CompanyRepository
 }
 
-func InitCompanyUsecase(company company.RepoInterface) UsecaseInterface {
+func InitCompanyUsecase(company company.CompanyRepository, logger logger.Log) UsecaseInterface {
 	return &usecase{
+		logger:  logger,
 		company: company,
 	}
 }

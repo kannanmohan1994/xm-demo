@@ -27,7 +27,7 @@ var (
 	once   sync.Once
 )
 
-func init() {
+func Setup() {
 	once.Do(func() {
 		viper.AutomaticEnv()
 		viper.SetConfigFile(".env")

@@ -6,14 +6,13 @@ import (
 	"xm/internal/entity/models"
 	"xm/internal/entity/response"
 	"xm/internal/middleware"
-	"xm/logger"
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 )
 
 func (us *usecase) CreateUser(name, password string) (resp *response.UserResponse, err error) {
-	logger.Info("Begin Usecase - CreateUser")
+	us.logger.Infof("Begin Usecase - CreateUser")
 
 	user := &models.User{
 		ID:       uuid.New().String(),
@@ -31,13 +30,13 @@ func (us *usecase) CreateUser(name, password string) (resp *response.UserRespons
 		return nil, err
 	}
 
-	logger.Info("End Usecase - CreateUser")
+	us.logger.Infof("End Usecase - CreateUser")
 	return &response.UserResponse{
 		AccessToken: accessToken,
 	}, nil
 }
 func (us *usecase) LoginUser(name, password string) (resp *response.UserResponse, err error) {
-	logger.Info("Begin Usecase - LoginUser")
+	us.logger.Infof("Begin Usecase - LoginUser")
 
 	user, err := us.user.GetUser(name, password)
 	if err != nil {
@@ -49,7 +48,7 @@ func (us *usecase) LoginUser(name, password string) (resp *response.UserResponse
 		return nil, err
 	}
 
-	logger.Info("End Usecase - LoginUser")
+	us.logger.Infof("End Usecase - LoginUser")
 	return &response.UserResponse{
 		AccessToken: accessToken,
 	}, nil

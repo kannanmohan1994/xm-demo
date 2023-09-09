@@ -5,6 +5,7 @@ import (
 	"xm/internal/repo"
 	company "xm/internal/usecase/company"
 	"xm/internal/usecase/user"
+	"xm/logger"
 )
 
 type Usecase struct {
@@ -12,9 +13,9 @@ type Usecase struct {
 	User    user.UsecaseInterface
 }
 
-func Init(repo *repo.Repo, middleware middleware.Middleware) *Usecase {
+func Init(repo *repo.Repo, middleware middleware.Middleware, logger logger.Log) *Usecase {
 	return &Usecase{
-		Company: company.InitCompanyUsecase(repo.Company),
-		User:    user.InitUserUsecase(repo.User, middleware),
+		Company: company.InitCompanyUsecase(repo.Company, logger),
+		User:    user.InitUserUsecase(repo.User, middleware, logger),
 	}
 }

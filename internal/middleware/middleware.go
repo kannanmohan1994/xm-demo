@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"xm/config"
+	"xm/logger"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -18,13 +19,15 @@ type Middleware interface {
 }
 
 type middleware struct {
+	logger logger.Log
 	config config.Config
 }
 
-func InitMiddleware(cfg config.Config) Middleware {
+func InitMiddleware(cfg config.Config, logger logger.Log) Middleware {
 	initJWKSet(cfg)
 
 	return &middleware{
 		config: cfg,
+		logger: logger,
 	}
 }

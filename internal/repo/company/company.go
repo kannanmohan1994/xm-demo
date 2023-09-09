@@ -2,11 +2,12 @@ package company
 
 import (
 	"xm/internal/entity/models"
+	"xm/logger"
 
 	"gorm.io/gorm"
 )
 
-type RepoInterface interface {
+type CompanyRepository interface {
 	GetCompany(id string) (result *models.Company, err error)
 	CreateCompany(obj *models.Company) (result *models.Company, err error)
 	PatchCompany(id string, obj *models.Company) (result *models.Company, err error)
@@ -14,11 +15,13 @@ type RepoInterface interface {
 }
 
 type repo struct {
-	db *gorm.DB
+	logger logger.Log
+	db     *gorm.DB
 }
 
-func InitCompanyRepo(db *gorm.DB) RepoInterface {
+func InitCompanyRepo(db *gorm.DB, logger logger.Log) CompanyRepository {
 	return &repo{
-		db: db,
+		logger: logger,
+		db:     db,
 	}
 }

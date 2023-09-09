@@ -11,17 +11,19 @@ import (
 )
 
 type companyHandler struct {
+	logger    logger.Log
 	companyUC company.UsecaseInterface
 }
 
-func InitCompanyHandler(uc company.UsecaseInterface) *companyHandler {
+func InitCompanyHandler(uc company.UsecaseInterface, logger logger.Log) *companyHandler {
 	return &companyHandler{
+		logger:    logger,
 		companyUC: uc,
 	}
 }
 
 func (h *companyHandler) HandleCreateCompany(c *gin.Context) {
-	logger.Info("Begin Handler - CreateCompany")
+	h.logger.Infof("Begin Handler - CreateCompany")
 
 	if errMessage, ok := c.Get("error"); ok {
 		c.JSON(http.StatusBadRequest, utils.Fail(100, errMessage.(string)))
@@ -41,12 +43,12 @@ func (h *companyHandler) HandleCreateCompany(c *gin.Context) {
 		return
 	}
 
-	logger.Info("End Handler - CreateCompany")
+	h.logger.Infof("End Handler - CreateCompany")
 	c.JSON(http.StatusOK, utils.Send(res))
 }
 
 func (h *companyHandler) HandleGetCompany(c *gin.Context) {
-	logger.Info("Begin Handler - GetCompany")
+	h.logger.Infof("Begin Handler - GetCompany")
 
 	companyId := c.Param("company_id")
 
@@ -56,12 +58,12 @@ func (h *companyHandler) HandleGetCompany(c *gin.Context) {
 		return
 	}
 
-	logger.Info("End Handler - GetCompany")
+	h.logger.Infof("End Handler - GetCompany")
 	c.JSON(http.StatusOK, utils.Send(result))
 }
 
 func (h *companyHandler) HandlePatchCompany(c *gin.Context) {
-	logger.Info("Begin Handler - PatchCompany")
+	h.logger.Infof("Begin Handler - PatchCompany")
 
 	if errMessage, ok := c.Get("error"); ok {
 		c.JSON(http.StatusBadRequest, utils.Fail(100, errMessage.(string)))
@@ -82,12 +84,12 @@ func (h *companyHandler) HandlePatchCompany(c *gin.Context) {
 		return
 	}
 
-	logger.Info("End Handler - PatchCompany")
+	h.logger.Infof("End Handler - PatchCompany")
 	c.JSON(http.StatusOK, utils.Send(result))
 }
 
 func (h *companyHandler) HandleDeleteCompany(c *gin.Context) {
-	logger.Info("Begin Handler - DeleteCompany")
+	h.logger.Infof("Begin Handler - DeleteCompany")
 
 	companyId := c.Param("company_id")
 
@@ -97,6 +99,6 @@ func (h *companyHandler) HandleDeleteCompany(c *gin.Context) {
 		return
 	}
 
-	logger.Info("End Handler - DeleteCompany")
+	h.logger.Infof("End Handler - DeleteCompany")
 	c.JSON(http.StatusOK, utils.Send(nil))
 }

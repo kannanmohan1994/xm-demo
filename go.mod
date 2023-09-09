@@ -5,22 +5,24 @@ go 1.21.1
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator v9.31.0+incompatible
+	github.com/golang/mock v1.6.0
 	github.com/spf13/viper v1.16.0
+	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.25.0
 	gorm.io/driver/postgres v1.5.2
 	gorm.io/gorm v1.25.4
 )
 
 require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.2.0 // indirect
-	github.com/golang/mock v1.6.0 // indirect
 	github.com/lestrrat-go/backoff/v2 v2.0.8 // indirect
 	github.com/lestrrat-go/blackmagic v1.0.1 // indirect
 	github.com/lestrrat-go/httpcc v1.0.1 // indirect
 	github.com/lestrrat-go/iter v1.0.2 // indirect
 	github.com/lestrrat-go/option v1.0.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/stretchr/testify v1.8.4 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 )
 
 require (

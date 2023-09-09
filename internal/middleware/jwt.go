@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"xm/config"
-	"xm/logger"
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/lestrrat-go/jwx/jwk"
@@ -62,7 +61,7 @@ func (m *middleware) CreateJWTTokenWithClaims(claims jwt.Claims, key jwk.Key, ki
 	var privateKey rsa.PrivateKey
 	rErr := key.Raw(&privateKey)
 	if rErr != nil {
-		logger.Error("Error while creating raw key: %v", rErr)
+		m.logger.Errorf("Error while creating raw key: ", rErr)
 		return "", rErr
 	}
 
@@ -90,7 +89,7 @@ func (m *middleware) GetPublicKey(token *jwt.Token) (interface{}, error) {
 		var privateKey rsa.PrivateKey
 		rErr := key.Raw(&privateKey)
 		if rErr != nil {
-			logger.Error("unable to find key %q", rErr)
+			m.logger.Errorf("unable to find key", rErr)
 			return nil, rErr
 		}
 		return privateKey.Public(), nil

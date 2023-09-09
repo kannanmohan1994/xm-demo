@@ -45,5 +45,5 @@ migrate-down:
 # MOCKS
 generate-mocks:
 	go get github.com/golang/mock
-	mockgen -destination=internal/usecase/company/repository_mock.go -package=company xm/internal/repo/company RepoInterface
-	mockgen -destination=internal/usecase/user/repository_mock.go -package=user xm/internal/repo/user RepoInterface
+	mockgen -destination=internal/usecase/company/repo_mock.go -package=company xm/internal/repo/company CompanyRepository
+	mockgen -destination=internal/usecase/user/repo_mock.go -package=user xm/internal/repo/user UserRepository

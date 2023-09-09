@@ -4,13 +4,12 @@ import (
 	"time"
 	"xm/internal/entity/models"
 	"xm/internal/entity/request"
-	"xm/logger"
 
 	"github.com/google/uuid"
 )
 
 func (u *usecase) CreateCompany(req *request.CreateCompanyRequest) (result *models.Company, err error) {
-	logger.Info("Begin Usecase - CreateCompany")
+	u.logger.Infof("Begin Usecase - CreateCompany")
 	company := &models.Company{
 		ID:            uuid.New().String(),
 		Name:          req.Name,
@@ -25,22 +24,22 @@ func (u *usecase) CreateCompany(req *request.CreateCompanyRequest) (result *mode
 	if err != nil {
 		return nil, err
 	}
-	logger.Info("End Usecase - CreateCompany")
+	u.logger.Infof("End Usecase - CreateCompany")
 	return result, err
 }
 
 func (u *usecase) GetCompany(id string) (result *models.Company, err error) {
-	logger.Info("Begin Usecase - GetCompany")
+	u.logger.Infof("Begin Usecase - GetCompany")
 	result, err = u.company.GetCompany(id)
 	if err != nil {
 		return result, err
 	}
-	logger.Info("End Usecase - GetCompany")
+	u.logger.Infof("End Usecase - GetCompany")
 	return result, nil
 }
 
 func (u *usecase) PatchCompany(id string, req *request.PatchCompanyRequest) (result *models.Company, err error) {
-	logger.Info("Begin Usecase - PatchCompany")
+	u.logger.Infof("Begin Usecase - PatchCompany")
 
 	result, err = u.company.GetCompany(id)
 	if err != nil {
@@ -58,12 +57,12 @@ func (u *usecase) PatchCompany(id string, req *request.PatchCompanyRequest) (res
 	if err != nil {
 		return result, err
 	}
-	logger.Info("End Usecase - PatchCompany")
+	u.logger.Infof("End Usecase - PatchCompany")
 	return result, nil
 }
 
 func (u *usecase) DeleteCompany(id string) (err error) {
-	logger.Info("Begin Usecase - PatchCompany")
+	u.logger.Infof("Begin Usecase - PatchCompany")
 
 	_, err = u.company.GetCompany(id)
 	if err != nil {
@@ -75,6 +74,6 @@ func (u *usecase) DeleteCompany(id string) (err error) {
 		return err
 	}
 
-	logger.Info("End Usecase - PatchCompany")
+	u.logger.Infof("End Usecase - PatchCompany")
 	return nil
 }

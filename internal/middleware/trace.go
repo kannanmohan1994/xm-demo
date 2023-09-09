@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"xm/consts"
-	"xm/logger"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -14,17 +13,7 @@ func (m *middleware) Trace() gin.HandlerFunc {
 		xRequestID := uuid.New().String()
 		c.Set(consts.CorrelationID, xRequestID)
 
-		logger.Debugf(`[API-Hit] [X-Request-Id:%s] - "%s %s"`, xRequestID, c.Request.Method, c.Request.URL.Path)
+		m.logger.Debugf(`[API-Hit] [X-Request-Id:%s] - "%s %s"`, xRequestID, c.Request.Method, c.Request.URL.Path)
 		c.Next()
 	}
 }
-
-// // GetCorrelationIDFromContext returns correlation-id from the given context if present
-// func GetCorrelationIDFromContext(c *gin.Context) string {
-// 	if v, ok := c.Get(consts.CorrelationID); ok {
-// 		if requestID, ok := v.(string); ok {
-// 			return requestID
-// 		}
-// 	}
-// 	return ""
-// }
