@@ -1,0 +1,18 @@
+repos:
+- repo: https://github.com/dnephin/pre-commit-golang
+  rev: v0.4.0
+  hooks: 
+    # Go Test
+    - id: go-unit-tests
+    
+    # Go Format
+    - id: go-imports
+    - id: go-fmt
+    
+    # Linting
+    - id: golangci-lint 
+      args: ['--skip-dirs', '(^|/)docs($|/)']
+    
+    # Go Build
+    - id: go-mod-tidy
+    - id: go-build

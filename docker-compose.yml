@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  xm:
+    container_name: xm
+    build:
+      context: .
+    ports:
+      - '9001:9001'
+    env_file:
+      - docker.env
+    networks:
+      - xmnet
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    expose:
+      - '5432'
+    ports:
+      - '5432:5432'
+    volumes:
+      - /data/postgres:/var/lib/postgresql/data
+    env_file:
+      - docker.env
+    networks:
+      - xmnet
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - '8080:80'
+    volumes:
+      - /data/pgadmin:/root/.pgadmin
+    env_file:
+      - docker.env
+    networks:
+      - xmnet
+
+networks:
+  xmnet:
+    driver: bridge
+
+volumes:
+  postgresdata:
+    driver: local
+  pgadmindata:
+    driver: local
