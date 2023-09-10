@@ -4,7 +4,7 @@ import (
 	"xm/internal/entity/response"
 )
 
-// swagger:route GET /health Health idGetHealth
+// swagger:route GET /v1/health Health idGetHealth
 // Checks the health of xm app
 // responses:
 // 		200: GetHealthResponse

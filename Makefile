@@ -47,3 +47,10 @@ generate-mocks:
 	go get github.com/golang/mock
 	mockgen -destination=internal/usecase/company/repo_mock.go -package=company xm/internal/repo/company CompanyRepository
 	mockgen -destination=internal/usecase/user/repo_mock.go -package=user xm/internal/repo/user UserRepository
+
+
+# SWAGGER
+swagger:
+	docker run --rm -v $(PWD):/go/src/xm -w /go/src/xm quay.io/goswagger/swagger generate spec -o /go/src/xm/swagger-ui/swagger.json
+
+
