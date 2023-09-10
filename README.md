@@ -11,7 +11,9 @@ XM - An application to handle companies. It should provide the following operati
 
 ### Local Setup
 - Clone: git clone https://github.com/kannanmohan1994/xm-demo.git
-- Run project: bash setup-project.sh
+- Setup infra: docker-compose up 
+- Run migrations: make migrate-up
+- Run application: make tidy, make run 
 - Testout API's: Go to http://localhost:9000/swaggerui/ 
 
 ### API testing in swagger

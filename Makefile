@@ -26,7 +26,7 @@ tidy: # Update Modules and Dependency Consistency
 build: # Builds the project
 	${GOCMD} build main.go
 
-run: # Runs the project
+run: # Builds the project
 	${GOCMD} run main.go
 
 lint:
