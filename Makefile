@@ -5,10 +5,6 @@ include .env
 GOCMD=go
 GOLINT_IMAGE := golangci/golangci-lint:v1.54.2
 GOTEST=$(GOCMD) test ./...
-# Machine OS
-OS := $(shell uname)
-WD := $(shell pwd)
-OS_LOWERCASE := $(shell uname | tr '[:upper:]' '[:lower:]')
 
 # GOTOOLS
 

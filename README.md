@@ -1,35 +1,23 @@
 ## Description
-xm - An application to handle companies. It should provide the following operations:
+XM - An application to handle companies. It should provide the following operations:
     • Create
     • Patch
     • Delete
     • Get (one)
 
 ## Installation
+Install Golang => https://golang.org/doc/install
+Install Docker => sudo snap install docker
 
 ### Local Setup
-- Clone the Repo -git clone git@bitbucket.org:keyvaluesoftwaresystems/go-gin-boilerplate.git
-- Install Golang: https://golang.org/doc/install
-- Install precommit hooks for github. It is required for prehook commit checks like lint, unit testing, formatting and so on.
+- Clone the Repo -git clone https://github.com/kannanmohan1994/xm-demo.git
+- Setup postgres, pgadmin, kafka: Enter repo, RUN docker-compose up 
+- Run application in local => make tidy, make run 
 
-```bash
-    make prehook-install
-```
-- Install Swagger required for API Documentation: 
-```bash 
-    make swagger-install 
-```
-- Generate Swagger API Specs:
-```bash
-    make gen-swagger
-```
+### Useful Commands
 - Download and Install all the dependent packages
 ```bash
-    go mod download
-```
-- To Build the Go Binary:
-```bash
-    make build
+    make tidy
 ```
 - To Run the Server:
 ```bash
@@ -39,27 +27,23 @@ xm - An application to handle companies. It should provide the following operati
 ```bash
     make test
 ```
+- To Run Lint:
+```bash
+    make lint
+```
+- To Setup Swagger Docs:
+```bash
+    make swagger
+```
 
 #### Environment Variables
 
 To run the service, you will need to populate environment variables to  .env file
 
-#### To create the migration File
+#### Run migrations
+    Up migrations => make migrate-up
+    Down migrations => make migrate-down
 
-Install goose binary from https://github.com/pressly/goose and move it under one of your PATH folder
-Or you can download using go
-
-`go install github.com/pressly/goose/v3/internal/goose@latest`
-
-To Create a Migration File
-
-`goose -dir <migration_folder> create <name> sql`
-
-To Execute a Migration
-
-`goose <driver> "postgresql://username:password@host:port/database?sslmode=disable" up`
-
-  
 ## Tech Stack
 
 *Database:* Postgres

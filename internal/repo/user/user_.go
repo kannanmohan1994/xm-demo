@@ -24,6 +24,6 @@ func (d *repo) CreateUser(user *models.User) (result *models.User, err error) {
 		d.logger.Errorf("error creating company", err.Error())
 	}
 
-	d.logger.Infof("End Repo - CreateUser", user.ID)
+	d.logger.Infof("End Repo - CreateUser %+v", user.ID)
 	return user, err
 }
