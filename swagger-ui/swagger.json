@@ -300,7 +300,7 @@
           "x-go-name": "Details"
         }
       },
-      "x-go-package": "xm/internal/utils"
+      "x-go-package": "xm/utils"
     },
     "Health": {
       "type": "object",
@@ -357,7 +357,7 @@
           "x-go-name": "Status"
         }
       },
-      "x-go-package": "xm/internal/utils"
+      "x-go-package": "xm/utils"
     },
     "UserRequest": {
       "type": "object",

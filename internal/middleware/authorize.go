@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 	"strings"
-	"xm/internal/utils"
+	"xm/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"

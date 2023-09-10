@@ -2,10 +2,9 @@ package app
 
 import (
 	"fmt"
-	"os"
+	"xm/app/pubsub"
 	"xm/app/router"
 	"xm/config"
-	"xm/consts"
 	database "xm/db"
 	"xm/internal/handler"
 	"xm/internal/middleware"
@@ -38,8 +37,6 @@ func Start() {
 
 	defer publisher.Close()
 
-	go consumer(config.KafkaHost, config.KafkaPort)
-
 	notifier := kafkaNotifier.InitKafka(publisher)
 
 	middleware := middleware.InitMiddleware(*config, logger)
@@ -56,41 +53,15 @@ func Start() {
 		Middleware: middleware,
 	})
 
+	pubsub.PreparePubSub(&pubsub.CapsulePubSub{
+		Logger:  logger,
+		Config:  config,
+		Usecase: uc,
+	})
+
 	logger.Infof("server running at port %s", config.ServerPort)
 	err = router.Run(":" + config.ServerPort)
 	if err != nil {
 		logger.Infof("error running server - %s", err.Error())
-	}
-}
-
-func consumer(host, port string) {
-	fmt.Println("Consumer is starting...")
-
-	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": fmt.Sprintf("%s:%s", host, port),
-		"group.id":          consts.KafkaGroupId,
-		"auto.offset.reset": "earliest",
-	})
-
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to create consumer: %v\n", err)
-		os.Exit(1)
-	}
-
-	defer consumer.Close()
-
-	err = consumer.SubscribeTopics([]string{consts.KafkaEventNotifierTopic}, nil)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error subscribing to topic: %v\n", err)
-		os.Exit(1)
-	}
-
-	for {
-		msg, err := consumer.ReadMessage(-1)
-		if err != nil {
-			fmt.Printf("Consumer error: %v\n", err)
-			continue
-		}
-		fmt.Printf("Received message: %s\n", string(msg.Value))
 	}
 }

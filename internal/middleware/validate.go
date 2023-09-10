@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"net/http"
-	"xm/internal/utils"
+	"xm/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"

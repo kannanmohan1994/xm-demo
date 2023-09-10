@@ -14,6 +14,10 @@ const (
 )
 
 const (
-	KafkaEventNotifierTopic = "kafka-event-notifier"
-	KafkaGroupId            = "kafka-group-id"
+	KafkaGroupId = "kafka-group-id"
+)
+
+const (
+	NotifyEventCompleted = "event.completed"
+	NotifyEventStarted   = "event.started"
 )

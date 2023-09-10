@@ -12,8 +12,10 @@ import (
 
 func (u *usecase) CreateCompany(req *request.CreateCompanyRequest) (result *models.Company, err error) {
 	u.logger.Infof("Begin Usecase - CreateCompany")
+
+	companyId := uuid.New().String()
 	company := &models.Company{
-		ID:            uuid.New().String(),
+		ID:            companyId,
 		Name:          req.Name,
 		Description:   req.Description,
 		EmployeeCount: req.EmployeeCount,
@@ -26,20 +28,25 @@ func (u *usecase) CreateCompany(req *request.CreateCompanyRequest) (result *mode
 	if err != nil {
 		return nil, err
 	}
-	u.logger.Infof("End Usecase - CreateCompany")
+
+	if notifyErr := u.notifier.Notify(consts.NotifyEventCompleted,
+		[]byte(fmt.Sprintf("completed CreateCompany with id: %s", companyId))); notifyErr != nil {
+		u.logger.Warnw("error notifying", "action", "CreateCompany", "company-id", companyId)
+	}
 	return result, err
 }
 
 func (u *usecase) GetCompany(id string) (result *models.Company, err error) {
-	u.logger.Infof("Begin Usecase - GetCompany")
+
 	result, err = u.company.GetCompany(id)
 	if err != nil {
 		return result, err
 	}
-	u.logger.Infof("End Usecase - GetCompany")
 
-	u.notifier.Notify(consts.KafkaEventNotifierTopic, []byte(fmt.Sprintf("fetched company with name: %s", result.Name)))
-
+	if notifyErr := u.notifier.Notify(consts.NotifyEventCompleted,
+		[]byte(fmt.Sprintf("completed GetCompany with id: %s", id))); notifyErr != nil {
+		u.logger.Warnw("error notifying", "action", "GetCompany", "company-id", id)
+	}
 	return result, nil
 }
 
@@ -62,7 +69,11 @@ func (u *usecase) PatchCompany(id string, req *request.PatchCompanyRequest) (res
 	if err != nil {
 		return result, err
 	}
-	u.logger.Infof("End Usecase - PatchCompany")
+
+	if notifyErr := u.notifier.Notify(consts.NotifyEventCompleted,
+		[]byte(fmt.Sprintf("completed PatchCompany with id: %s", id))); notifyErr != nil {
+		u.logger.Warnw("error notifying", "action", "PatchCompany", "company-id", id)
+	}
 	return result, nil
 }
 
@@ -79,6 +90,9 @@ func (u *usecase) DeleteCompany(id string) (err error) {
 		return err
 	}
 
-	u.logger.Infof("End Usecase - PatchCompany")
+	if notifyErr := u.notifier.Notify(consts.NotifyEventCompleted,
+		[]byte(fmt.Sprintf("completed DeleteCompany with id: %s", id))); notifyErr != nil {
+		u.logger.Warnw("error notifying", "action", "DeleteCompany", "company-id", id)
+	}
 	return nil
 }

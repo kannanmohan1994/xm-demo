@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 	"xm/internal/entity/response"
-	"xm/internal/utils"
+	"xm/utils"
 
 	"github.com/gin-gonic/gin"
 )

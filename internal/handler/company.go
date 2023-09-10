@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"xm/internal/entity/request"
 	company "xm/internal/usecase/company"
-	"xm/internal/utils"
 	"xm/logger"
+	"xm/utils"
 
 	"github.com/gin-gonic/gin"
 )

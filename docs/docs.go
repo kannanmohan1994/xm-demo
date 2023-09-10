@@ -25,7 +25,7 @@
 // swagger:meta
 package docs
 
-import "xm/internal/utils"
+import "xm/utils"
 
 // swagger:response CustomErrorWrapper
 type CustomErrorWrapper struct {

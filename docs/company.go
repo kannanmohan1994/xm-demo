@@ -3,7 +3,7 @@ package docs
 import (
 	"xm/internal/entity/models"
 	"xm/internal/entity/request"
-	"xm/internal/utils"
+	"xm/utils"
 )
 
 // swagger:route POST /v1/company Company idCreateCompany
