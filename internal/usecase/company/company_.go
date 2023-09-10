@@ -37,6 +37,7 @@ func (u *usecase) CreateCompany(req *request.CreateCompanyRequest) (result *mode
 }
 
 func (u *usecase) GetCompany(id string) (result *models.Company, err error) {
+	u.logger.Infof("Begin Usecase - GetCompany")
 
 	result, err = u.company.GetCompany(id)
 	if err != nil {

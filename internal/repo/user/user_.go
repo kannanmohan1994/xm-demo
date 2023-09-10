@@ -10,6 +10,7 @@ func (d *repo) GetUser(name, password string) (result *models.User, err error) {
 	err = d.db.Table("users").Where("name = ? AND password = ?", name, password).First(&result).Error
 	if err != nil {
 		d.logger.Errorf("error fetching from company", err.Error())
+		return result, err
 	}
 
 	d.logger.Infof("End Repo - GetUser - %+v", result)
@@ -22,6 +23,7 @@ func (d *repo) CreateUser(user *models.User) (result *models.User, err error) {
 	err = d.db.Table("users").Create(&user).Error
 	if err != nil {
 		d.logger.Errorf("error creating company", err.Error())
+		return result, err
 	}
 
 	d.logger.Infof("End Repo - CreateUser %+v", user.ID)

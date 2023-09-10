@@ -13,9 +13,10 @@ func (d *repo) CreateCompany(company *models.Company) (result *models.Company, e
 	err = d.db.Table("company").Create(&company).Error
 	if err != nil {
 		d.logger.Errorf("error creating company", err.Error())
+		return result, err
 	}
 
-	d.logger.Infof("End Repo - CreateCompany- %v", company.ID)
+	d.logger.Infof("End Repo - CreateCompany - %v", company.ID)
 	return company, err
 }
 
@@ -25,6 +26,7 @@ func (d *repo) GetCompany(id string) (result *models.Company, err error) {
 	err = d.db.Table("company").Where("id = ?", id).First(&result).Error
 	if err != nil {
 		d.logger.Errorf("error fetching from company", err.Error())
+		return result, err
 	}
 
 	d.logger.Infof("End Repo - GetCompany - %+v", result)
@@ -57,6 +59,7 @@ func (d *repo) PatchCompany(id string, obj *models.Company) (result *models.Comp
 		result = &models.Company{ID: id}
 		if err = d.db.Table("company").Model(&result).Clauses(clause.Returning{}).Updates(updateMap).Error; err != nil {
 			d.logger.Errorf("error fetching from company", err.Error())
+			return result, err
 		}
 	}
 
@@ -70,6 +73,7 @@ func (d *repo) DeleteCompany(id string) (err error) {
 	err = d.db.Table("company").Delete(&models.Company{}, "id = ?", id).Error
 	if err != nil {
 		d.logger.Errorf("error fetching from company", err.Error())
+		return err
 	}
 
 	d.logger.Infof("End Repo - DeleteCompany")

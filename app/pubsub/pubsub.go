@@ -27,7 +27,6 @@ func PreparePubSub(capsule *CapsulePubSub) {
 
 func (c *CapsulePubSub) Serve() {
 	go c.RunConsumer(fmt.Sprintf("%s:%s", c.Config.KafkaHost, c.Config.KafkaPort), consts.KafkaGroupId, []string{
-		consts.NotifyEventStarted,
 		consts.NotifyEventCompleted,
 	})
 }

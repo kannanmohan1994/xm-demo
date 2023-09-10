@@ -19,5 +19,4 @@ const (
 
 const (
 	NotifyEventCompleted = "event.completed"
-	NotifyEventStarted   = "event.started"
 )

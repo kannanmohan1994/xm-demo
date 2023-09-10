@@ -43,12 +43,12 @@ func (h *userHandler) HandleCreateUser(c *gin.Context) {
 		return
 	}
 
-	h.logger.Infof("End Handler - CreateCompany")
+	h.logger.Infof("End Handler - CreateUser")
 	c.JSON(http.StatusOK, utils.Send(res))
 }
 
 func (h *userHandler) HandleLoginUser(c *gin.Context) {
-	h.logger.Infof("Begin Handler - CreateUser")
+	h.logger.Infof("Begin Handler - LoginUser")
 
 	if errMessage, ok := c.Get("error"); ok {
 		c.JSON(http.StatusBadRequest, utils.Fail(100, errMessage.(string)))
@@ -68,6 +68,6 @@ func (h *userHandler) HandleLoginUser(c *gin.Context) {
 		return
 	}
 
-	h.logger.Infof("End Handler - CreateCompany")
+	h.logger.Infof("End Handler - LoginUser")
 	c.JSON(http.StatusOK, utils.Send(res))
 }
